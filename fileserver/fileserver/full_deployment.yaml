@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fileshare-exploits-ns
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myregistrykey
+  namespace: fileshare-exploits-ns
+data:
+  .dockerconfigjson: {{ cat ~/.docker/config | base64 }}
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fileshare-exploits-deployment
+  namespace: fileshare-exploits-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fileshare-exploits-deployment
+  template:
+    metadata:
+      labels:
+        app: fileshare-exploits-deployment
+    spec:
+      containers:
+      - name: fileshare-exploits-deployment
+        image: subdomain.yourdomain.com/fileshare-exploits
+        env:
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: myregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fileshare-exploits-deployment-service
+  namespace: fileshare-exploits-ns
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: fileshare-exploits-deployment
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fileshare-exploits-deployment-ingress
+  namespace: fileshare-exploits-ns
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    #cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    traefik.ingress.kubernetes.io/frontend-entry-points: http, https
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  rules:
+  - host: fileshare.yourdomain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fileshare-exploits-deployment-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - fileshare.yourdomain.com
+    secretName: fileshare-com-tls
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: fileshare-exploits-ingressroute
+  namespace: fileshare-exploits-ns
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`fileshare.yourdomain.com`)
+      kind: Rule
+      services:
+        - name: fileshare-exploits-deployment-service
+          port: 80
+  tls:
+    certResolver: letsencrypt
+

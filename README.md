@@ -17,6 +17,9 @@ docker cp <CONTAINER ID>:/tmp/tmp_localpython.tar.gz .
 docker stop <CONTAINER ID>
 ```
 
+# fileserver
+* Use this directory to create a fileserver, share files over https
+* Build for k8s but can be converted over for your standard nginx server
 
 # Disclaimer
 * Not responsible for you breaking the law, think before you type.

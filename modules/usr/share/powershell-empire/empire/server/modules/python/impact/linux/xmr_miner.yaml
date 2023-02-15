@@ -21,7 +21,7 @@ options:
   - name: Fileserver
     description: Full URL and directory path for the fileserver we will download xmrig in base64
     required: true
-    value: 'https://fileshare.reaper-ut.com/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/'
+    value: 'https://fileshare.yourdomain.com/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/'
   - name: Wallet
     description: Your monero wallet address
     required: true
