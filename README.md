@@ -17,6 +17,20 @@ docker cp <CONTAINER ID>:/tmp/tmp_localpython.tar.gz .
 docker stop <CONTAINER ID>
 ```
 
+# Standalone socat
+* Need standalone socat? Build it and copy it out of the container:
+```
+docker build -t socat-builder-debian-bullseye .
+docker run --rm -it -d socat-builder-debian-bullseye bash
+docker cp <CONTAINER ID>:/tmp/socat/socat.b64 .
+```
+Paste the base64 contents into a file on your compromised machine.
+Then cat it out back into binary:
+```
+cat socat.b64 | base64 -d > socat
+chmod 755 socat
+```
+
 # fileserver
 * Use this directory to create a fileserver, share files over https
 * Build for k8s but can be converted over for your standard nginx server
