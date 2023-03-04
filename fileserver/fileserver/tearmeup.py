@@ -7,18 +7,19 @@ due to a limitation with powershell empire's limit of 1M files.
 
 import glob
 
+SEEK_FILE = 'xmrig.b64'
+
 
 def file_check() -> None:
     """Check for our base64 file and throw exception if not found"""
-    seek_file = 'xmrig.b64'
-    check_for_file = glob.glob(seek_file)
+    check_for_file = glob.glob(SEEK_FILE)
     if not check_for_file[0]:
-        raise ValueError('File xmrig.b64 does not exist!')
+        raise ValueError(f'File {SEEK_FILE} does not exist!')
 
 
 def read_b64_file() -> str:
-    """Read the xmrig file that is base64 encoded"""
-    with open('xmrig.b64', 'r') as b64_file:
+    """Read the file that is base64 encoded"""
+    with open(SEEK_FILE, 'r') as b64_file:
         b64_string = b64_file.read()
     return b64_string
 
