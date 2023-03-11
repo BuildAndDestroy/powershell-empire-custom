@@ -1,0 +1,19 @@
+name: Ncat Standalone on Bullseye
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build ncat and nmap
+      run: docker build -t ncat_standalone_bullseye:$(date +%s) -f ncat_standalone/containers/debian/bullseye/Dockerfile .
+
