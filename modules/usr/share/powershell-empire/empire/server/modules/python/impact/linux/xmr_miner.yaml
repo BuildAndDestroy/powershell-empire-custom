@@ -1,6 +1,8 @@
 name: Cryptominer
 authors:
-  - '@BuildAndDestroy'
+  - name: 0x636f646f
+    handle: '@BuildAndDestroy'
+    link: https://github.com/BuildAndDestroy
 description: Deploys a monero miner
 software: ''
 techniques:
