@@ -9,7 +9,7 @@ FROM nginx:latest
 RUN apt update -y
 RUN apt install wget python3 -y
 
-ARG FQDN=fileshare.outssystems.com
+ARG FQDN=fileshare.yourdomain.com
 
 COPY fileserver/$FQDN.conf /etc/nginx/conf.d/$FQDN.conf
 RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
