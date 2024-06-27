@@ -12,10 +12,9 @@ RUN apt install wget python3 -y
 ARG FQDN=fileshare.yourdomain.com
 
 COPY fileserver/$FQDN.conf /etc/nginx/conf.d/$FQDN.conf
-RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
 RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv
 RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl
-#RUN mkdir -p /usr/share/nginx/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
+RUN chmod -R 755 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw
 
 #COPY # Remember to copy /usr/share/nginx/html into 
 
@@ -25,6 +24,3 @@ WORKDIR /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux
 # Copy artifacts
 COPY --from=monero1 /root/build/ /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv
 COPY --from=deroheminer1 /root/build/ /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl
-
-RUN chmod -R 644 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv/
-RUN chmod -R 644 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl/
