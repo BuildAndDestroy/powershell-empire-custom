@@ -14,7 +14,7 @@ ARG FQDN=fileshare.yourdomain.com
 COPY fileserver/$FQDN.conf /etc/nginx/conf.d/$FQDN.conf
 RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/bW9uZXJv
 RUN mkdir -p /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw/linux/ZGVyb2hl
-RUN chmod -R 755 /opt/$FQDN/html/c3VnYXJkYWRkeQo/decodeme
+RUN chmod -R 755 /opt/$FQDN/html/YWxseW91cmZpbGVzYmVsb25ndG91cw
 
 #COPY # Remember to copy /usr/share/nginx/html into 
 
