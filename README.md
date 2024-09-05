@@ -35,6 +35,21 @@ chmod 755 socat
 * Use this directory to create a fileserver, share files over https
 * Build for k8s but can be converted over for your standard nginx server
 
+# Empire File Structure
+
+If deploying to the kali install, cp the file structure as follows:
+
+```
+sudo cp -r ~/git/powershell-empire-custom/modules/usr/share/powershell-empire/empire/ /usr/share/powershell-empire/
+```
+
+If deploying using github, then copy the file structure as follows:
+
+```
+cp -r ~/git/powershell-empire-custom/modules/usr/share/powershell-empire/empire/ /path/to/Empire/
+```
+
+
 # Disclaimer
 * Not responsible for you breaking the law, think before you type.
 
